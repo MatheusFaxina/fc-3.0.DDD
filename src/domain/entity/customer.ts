@@ -1,4 +1,8 @@
 import Address from "./address";
+import CustomerCreatedEvent from "../event/customer/customer-created.event";
+import CustomerUpdatedAddressHandler from "../event/customer/handler/customer-updated-address.handler";
+import CustomerUpdatedAddressEvent from "../event/customer/customer-updated-address.event";
+import CustomerCreatedHandler from "../event/customer/handler/customer-created.handler";
 
 export default class Customer {
 
@@ -13,6 +17,11 @@ export default class Customer {
         this._name = name;
 
         this.validate();
+
+        const customerCreatedHandler = new CustomerCreatedHandler();
+        customerCreatedHandler.handle(new CustomerCreatedEvent({
+            customer: this
+        }));
     }
 
     get name(): string {
@@ -33,6 +42,13 @@ export default class Customer {
 
     changeAddress(address: Address) {
         this._address = address;
+
+        const customerUpdatedAddressHandler = new CustomerUpdatedAddressHandler();
+        customerUpdatedAddressHandler.handle(new CustomerUpdatedAddressEvent({
+            id: this._id,
+            name: this._name,
+            address: address
+        }));
     }
 
     get address(): Address {

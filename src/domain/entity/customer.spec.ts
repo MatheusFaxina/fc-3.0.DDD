@@ -56,6 +56,16 @@ describe("Customer unit tests", () => {
 
         customer.addRewardPoints(10);
         expect(customer.rewardPoints).toBe(20);
+    });
+
+    it("should create customer", () => {
+        const customer = new Customer("1", "Customer 1");
+    });
+
+    it("should create customer", () => {
+        const customer = new Customer("1", "Customer 1");
+        const address = new Address("Street 1", 123, "12345-123", "São Paulo");
+        customer.changeAddress(address);
 
     });
 
